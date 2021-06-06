@@ -1,0 +1,65 @@
+Alex Strawn
+11632677
+
+Part 1
+A.
+   Case  | a.out |  TEXT  |  DATA  |  BSS   |
+   -------------------------------------------
+   (1)   | 16712 |  1679  |  304   |   8    |
+   --------------------------------------------  
+   (2)   | 16712 |  1679  |  308   |   4    |
+   --------------------------------------------
+   (3)   | 16712 |  1679  |  304   | 40032  |
+   --------------------------------------------
+   (4)   | 56728 |  1679  |  40328 |   4    |
+   --------------------------------------------
+   (5)   | 16768 |  1927  |  308   |   8    |
+   --------------------------------------------        
+   (6)   | 16840 |  1695  |  304   | 40068  |
+   --------------------------------------------
+
+   1.  variables: g, a, b, c, d
+       
+       Which variables are in DATA?
+           
+           In t1.c none of these variables are in DATA.
+	   However, g is in DATA in t2.c and t4.c. In t6.c,
+           variables a, b, c, and d are all in DATA.
+      
+       Which variables are in BSS?
+           
+           In t1.c, t3.c, t5.c, and t6.c, g is in BSS. Variables a, b, c, and d
+           can also be found in BSS in t6.c.
+
+   2.   In terms of the TEXT, DATA and BSS sections,
+        Which sections are in a.out, which section is NOT in a.out?
+        WHY?
+
+           Both TEXT and DATA are in a.out, but BSS is not. Only the size
+           of BSS is stored in a.out.
+
+B.
+
+       For each case, use   cc -m32 -static t.c   to generate a.out.
+       Record the sizes again and compare them with the sizes in (A).
+       WHAT DO YOU SEE? The sizes in this case are substantially larger than in A.
+       WHY? Since static linking is used in this case, a.out is self-contained but also much larger than 
+            it is in Part A.
+   
+
+   Case  | a.out |  TEXT  |  DATA  |  BSS   |
+   -------------------------------------------
+   (1)   | 871648| 622869 |  11224 |  3408  |
+   --------------------------------------------  
+   (2)   | 871648| 622869 |  11224 |  3408  |
+   --------------------------------------------
+   (3)   | 871648| 622869 |  11224 |  43408 |
+   --------------------------------------------
+   (4)   | 911648| 622869 |  51256 |  3408  |
+   --------------------------------------------
+   (5)   | 871648| 622933 |  11224 |  3408  |
+   --------------------------------------------        
+   (6)   | 871776| 622885 |  11224 |  43440 |
+   --------------------------------------------
+   
+   

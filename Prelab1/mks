@@ -1,0 +1,5 @@
+# mk sh script: run as   mk filename
+
+cc -static $1.c
+ls -l a.out
+size a.out

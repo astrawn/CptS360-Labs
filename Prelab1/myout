@@ -1,0 +1,148 @@
+enter main
+&argc=ffa40730 &argv=ffa407c4 &env=ffa407cc
+&a=ffa406ec &b=ffa406f0 &c=ffa406f4
+argc=1 argv[0]=ffa4241e
+enter A
+&d=ffa406a0 &e=ffa406a4 &f=ffa406a8
+enter B
+&g=ffa40670 &h=ffa40674 &i=ffa40678
+enter C
+&u=ffa40634 &v=ffa40638 &w=ffa4063c &i=ffa40640 &p=ffa40644
+FP = ffa40658
+
+
+Stack Frame Linked List
+ffa40658 ->ffa40688 ->ffa406b8 ->ffa40718 ->NULL
+
+
+ffa40634     a		  u=10
+ffa40638     b		  v=11
+ffa4063c     c		  w=12
+ffa40640     d		  i=13
+ffa40644     ffa40644    p=p
+ffa40648     5		  
+ffa4064c     b812df00
+ffa40650     ffa40730
+ffa40654     565eafd0
+ffa40658     ffa40688	  FP
+ffa4065c     565e840a	  retPC
+ffa40660     7
+ffa40664     8
+ffa40668     ffa40674
+ffa4066c     ffa40678
+ffa40670     7		  g=7
+ffa40674     8		  h=8
+ffa40678     9		  i=9
+ffa4067c     b812df00
+ffa40680     ffa40730
+ffa40684     565eafd0
+ffa40688     ffa406b8	  FP
+ffa4068c     565e836b	  retPC
+ffa40690     4
+ffa40694     5
+ffa40698     ffa406a4
+ffa4069c     ffa406a8
+ffa406a0     4		  d=4
+ffa406a4     5		  e=5
+ffa406a8     6		  f=6
+ffa406ac     b812df00
+ffa406b0     ffa40730
+ffa406b4     565eafd0
+ffa406b8     ffa40718	  FP
+ffa406bc     565e82c2	  retPC
+ffa406c0     1
+ffa406c4     2
+ffa406c8     ffa4241e
+ffa406cc     ffa406f4
+ffa406d0     0
+ffa406d4     f7ef6000
+ffa406d8     ffa407cc
+ffa406dc     ffa407c4
+ffa406e0     f7ef6000
+ffa406e4     f7f232d0
+ffa406e8     0
+ffa406ec     1		  a=1
+ffa406f0     2		  b=2
+ffa406f4     3		  c=3
+ffa406f8     1
+ffa406fc     b812df00
+ffa40700     1
+ffa40704     ffa407c4	  
+ffa40708     ffa407cc	  
+ffa4070c     ffa40730	  
+ffa40710     0
+ffa40714     f7ef6000
+ffa40718     0		  FP
+ffa4071c     f7d2dee5
+ffa40720     f7ef6000
+ffa40724     f7ef6000
+ffa40728     0
+ffa4072c     f7d2dee5
+ffa40730     1		  argc=1
+ffa40734     ffa407c4	  &argv
+ffa40738     ffa407cc	  &env
+ffa4073c     ffa40754
+ffa40740     f7ef6000
+ffa40744     f7f3e000
+ffa40748     ffa407a8
+ffa4074c     0
+ffa40750     f7f3e990
+ffa40754     0
+ffa40758     f7ef6000
+ffa4075c     f7ef6000
+ffa40760     0
+ffa40764     f4a1ae2e
+ffa40768     1912883e
+ffa4076c     0
+ffa40770     0
+ffa40774     0
+ffa40778     0
+ffa4077c     0
+ffa40780     0
+ffa40784     0
+ffa40788     f7f2317d
+ffa4078c     565eafd0
+ffa40790     1
+ffa40794     565e8090
+ffa40798     0
+ffa4079c     565e80c5
+ffa407a0     565e81cd
+ffa407a4     1
+ffa407a8     ffa407c4
+ffa407ac     565e8590
+ffa407b0     565e8600
+ffa407b4     f7f232d0
+ffa407b8     ffa407bc
+ffa407bc     1c
+ffa407c0     1
+ffa407c4     ffa4241e
+ffa407c8     0
+ffa407cc     ffa42426
+ffa407d0     ffa42436
+ffa407d4     ffa4249a
+ffa407d8     ffa424ad
+ffa407dc     ffa424c1
+ffa407e0     ffa424ee
+ffa407e4     ffa42505
+ffa407e8     ffa42531
+ffa407ec     ffa42544
+ffa407f0     ffa42557
+ffa407f4     ffa42577
+ffa407f8     ffa425a0
+ffa407fc     ffa425b4
+ffa40800     ffa425cb
+ffa40804     ffa425de
+ffa40808     ffa425fa
+ffa4080c     ffa42611
+ffa40810     ffa4261e
+ffa40814     ffa42639
+ffa40818     ffa4264e
+ffa4081c     ffa42682
+ffa40820     ffa426ab
+ffa40824     ffa426cc
+ffa40828     ffa426d9
+ffa4082c     ffa426e9
+ffa40830     ffa426f7
+exit B
+exit A
+exit main

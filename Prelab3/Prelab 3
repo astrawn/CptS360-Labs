@@ -1,0 +1,165 @@
+Alex Strawn
+11632677
+
+
+             LAB3pre Work: Processes in an OS Kernel
+                     DUE: 9-22-2020
+       Answer questions below. Submit a (text-edit) file to TA
+	     
+1. READ List: Chapter 3: 3.1-3.5
+
+What's a process? (Page 102)  
+A process is the execution of an image.
+	     
+Each process is represented by a PROC structure.
+Read the PROC structure in 3.4.1 on Page 111 and answer the following questions:
+
+What's the meaning of:
+   pid, ppid?  process ID and parent process ID
+   status   ?  status of the process
+   priority ?  scheduling priority of the process
+   event    ?  value given for event occurring
+   exitCode ?  value process gives when exiting
+
+READ 3.5.2 on Process Family Tree. What are the
+   PROC pointers child, sibling, parent used for?  
+   These pointers are used to manage processes and 
+   their relation to one another.
+	     
+2. Download samples/LAB3pre/mtx. Run it under Linux.
+   MTX is a multitasking system which simulates process operations of
+         fork, exit, wait, sleep, wakeup
+   in a Unix/Linux kernel
+	     
+/*********** A Multitasking System ************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "type.h"    // PROC struct and system constants
+	
+// global variables:
+PROC proc[NPROC], *running, *freeList, *readyQueue, *sleepList; 
+
+running    = pointer to the current running proc
+freeList   = a list of all FREE PROCs
+readyQueue = a priority queue of procs READY to run
+sleepList  = a list of SLEEP procs, if any.
+
+Run mtx. It first initialize the system, creates an initial process P0.
+P0 has the lowest priotiry 0, all other processes have priority 1
+
+Ater initialization,
+     P0 forks a child prcoess P1, switch process to run P1.
+
+                The display looks like the following
+-----------------------------------------------------------------------------
+Welcome to KCW's Multitasking System
+1. init system
+freeList = [0 0]->[1 0]->[2 0]->[3 0]->[4 0]->[5 0]->[6 0]->[7 0]->[8 0]->NULL
+2. create initial process P0
+freeList = [1 0]->[2 0]->[3 0]->[4 0]->[5 0]->[6 0]->[7 0]->[8 0]->NULL
+init complete: P0 running
+3. P0 fork P1
+4. P0 switch process to P1
+P0: switch task
+proc 0 in scheduler()
+readyQueue = [1 1]->[0 0]->NULL
+next running = 1
+proc 1 resume to body()
+
+proc 1 running: Parent=0 childList = NULL
+freeList  = [2 0]->[3 0]->[4 0]->[5 0]->[6 0]->[7 0]->[8 0]->NULL
+readQueue = [0 0]->NULL
+sleepList = NULL
+input a command: [ps|fork|switch|exit|sleep|wakeup|wait] : 
+----------------------------------------------------------------------------
+3.                     COMMANDS:
+ps     : display procs with pid, ppid, status; same as ps in Unix/Linux
+fork   : READ kfork()   on Page 109: What does it do?  creates a child that enters into the readyQueue.
+switch : READ tswitch() on Page 108: What does it do?  acts in a way that switches processes.
+exit   : READ kexit()   on Page 112: What does it do?  closes or exits the process
+         
+sleep  : READ ksleep()  on Page 111: What does it do?  puts processes to sleep until the are woken up
+wakeup : READ kwakeup() on Page 112: What does it do?  wakes up all processes that are waiting on an event value when the value arises.
+	     
+wait   : READ kwait()   on Page 114: What does it do?  waits for a ZOMBIE child and then returns the child's pid
+---------------------------------------------------------------------------
+
+------------------------ REQUIREMENTS -----------------------------------
+4.                Step 1: test fork
+While P1 running, enter fork: What happens?  creates a child of P1
+
+Enter fork many times; 
+      How many times can P1 fork? 7 times   
+      WHY?  it is limited by the number of registers the CPU has available
+
+Enter Control-c to end the program run.
+
+
+5.                Step 2: Test sleep/wakeup
+Run mtx again.
+While P1 running, fork a child P2;
+Switch to run P2. Where did P1 go?  moved to the head of readQueue
+		   WHY?  P1 was placed on the readQueue stack when P2 was removed from it in order to save it for later
+P2: Enter sleep, with a value, e.g.123 to let P2 SLEEP.
+What happens?  P2 is moved to the sleepList stack
+WHY?  sleep puts the current process to sleep and then moves it to the sleepList stack
+
+Now, P1 should be running. Enter wakeup with a value, e.g. 234
+Did any proc wake up?  No
+WHY? the wakeup code entered did not match any event code that a sleeping process needed to wakeup
+
+P1: Enter wakeup with 123
+What happens?  P2 is woken up
+WHY? the event code that P2 needed to wakeup is present when the wakeup call is made
+
+
+6.          Step 3: test child exit/parent wait
+	     
+When a proc dies (exit) with a value, it becomes a ZOMBIE, wakeup its parent.
+Parent may issue wait to wait for a ZOMBIE child, and frees the ZOMBIE
+
+Run mtx;
+P1: enter wait; What happens? there is a wait error 
+WHY? there are no children yet
+
+	    CASE 1: child exit first, parent wait later
+P1: fork a child P2, switch to P2.
+P2: enter exit, with a value, e.g. 123 ==> P2 will die with exitCode=123.
+Which process runs now?  P1
+WHY?  P2 has become a ZOMBIE so P1 runs instead
+enter ps to see the proc status: P2 status = ZOMBIE
+
+(P1 still running) enter wait; What happens? P1 no longer has any children
+                   enter ps;   What happened to P2? P2 was freed
+
+	     CASE 2: parent wait first, child exit later
+P1: enter fork to fork a child P3
+P1: enter wait;  What happens to P1? P1 is put to sleep WHY?  P1 is waiting for P3 to finish
+P3: Enter exit with a value; What happens? P1 wakes up
+P1: enter ps;  What's the status of P3? P3 is free WHY? P3 was freed when exit was called
+	     
+7.             Step 4: test Orphans
+	     
+When a process with children dies first, all its children become orphans.
+In Unix/Linux, every process (except P0) MUST have a unique parent.
+So, all orphans become P1's children. Hence P1 never dies.
+
+Run mtx again.
+P1: fork child P2, Switch to P2.
+P2: fork several children of its own, e.g. P3, P4, P5 (all in its childList).
+P2: exit with a value. 
+P1 should be running WHY?  P2 has become a ZOMBIE so P1 begins running instead
+P1: enter ps to see proc status: which proc is ZOMBIE?  P2
+What happened to P2's children? they are now P1's children
+P1: enter wait; What happens? P2 is freed
+P1: enter wait again; What happens?  P1 is put to sleep and P3 is now running
+WHY?  P1 is waiting for child processes to finish
+
+How to let P1 READY to run again? exit all children processes
+
+
+
+  
+

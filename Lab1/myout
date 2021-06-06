@@ -1,0 +1,25 @@
+#Alex Strawn
+#11632677
+
+start=18 end=359 number=342 type=7
+start=360 end=719 number=360 type=83
+start=720 end=1439 number=720 type=c
+start=1440 end=2879 number=1440 type=5
+-----EXTEND PARTITION-----
+start=18 end=359 number=342 type=6
+start=377 end=899 number=523 type=5
+-----EXTEND PARTITION-----
+start=1 end=522 number=522 type=82
+start=917 end=1439 number=523 type=5
+-----EXTEND PARTITION-----
+start=0 end=0 number=0 type=0
+
+
+1... 2... 3... Hello!
+-1
+0xBB8
+03400
+argc=1  argv=./a.out  env=SHELL=/bin/bash
+cha=A string=this is a test      
+dec=144 hex=0x64 oct=0144 neg=-144
+-1, 0x2, 03, 4 Fox > ^..^
